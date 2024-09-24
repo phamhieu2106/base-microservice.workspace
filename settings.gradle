@@ -1,0 +1,14 @@
+rootProject.name = 'microservice'
+//shared
+include 'workspace:shared:shared-base'
+
+//infrastructure
+include 'workspace:infrastructure:auth-server'
+
+//auth service
+include 'workspace:auth-service:auth-command'
+include 'workspace:auth-service:auth-shared'
+include 'workspace:auth-service:auth-domain'
+include 'workspace:auth-service:auth-flow'
+include 'workspace:auth-service:auth-query'
+

@@ -11,4 +11,8 @@ include 'workspace:auth-service:auth-shared'
 include 'workspace:auth-service:auth-domain'
 include 'workspace:auth-service:auth-flow'
 include 'workspace:auth-service:auth-query'
+include 'workspace:shared:shared-database'
+include 'workspace:shared:shared-elasticsearch'
+include 'workspace:shared:shared-eventsourcing'
+findProject(':workspace:shared:shared-eventsourcing')?.name = 'shared-eventsourcing'
 

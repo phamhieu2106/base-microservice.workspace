@@ -1,7 +1,7 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version "${springBootVersion}"
-	id 'io.spring.dependency-management' version "${springDependency}"
+    id 'java'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${springDependency}"
 }
 
 group = 'com.henry'
@@ -9,52 +9,53 @@ version = '0.0.1-SNAPSHOT'
 
 
 sourceSets {
-	main {
-		java {srcDirs = []}
-		resources {srcDirs = []}
-	}
-	test {
-		java {srcDirs = []}
-		resources {srcDirs = []}
-	}
+    main {
+        java { srcDirs = [] }
+        resources { srcDirs = [] }
+    }
+    test {
+        java { srcDirs = [] }
+        resources { srcDirs = [] }
+    }
 }
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
 }
 
 subprojects {
-	apply plugin: 'java'
-	apply plugin: 'org.springframework.boot'
-	apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-	repositories {
-		mavenCentral()
-	}
+    repositories {
+        mavenCentral()
+    }
 
-	dependencies {
-		implementation 'org.springframework.boot:spring-boot-starter-web'
-		compileOnly 'org.projectlombok:lombok'
-		annotationProcessor 'org.projectlombok:lombok'
-		testImplementation 'org.springframework.boot:spring-boot-starter-test'
-		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	}
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    }
 }
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

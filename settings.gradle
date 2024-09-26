@@ -1,6 +1,11 @@
 rootProject.name = 'microservice'
 //shared
 include 'workspace:shared:shared-base'
+include 'workspace:shared:shared-database'
+include 'workspace:shared:shared-elasticsearch'
+include 'workspace:shared:shared-eventsourcing'
+include 'workspace:shared:shared-eventsourcingbase'
+include 'workspace:shared:shared-rabbitmq'
 
 //infrastructure
 include 'workspace:infrastructure:auth-server'
@@ -11,8 +16,7 @@ include 'workspace:auth-service:auth-shared'
 include 'workspace:auth-service:auth-domain'
 include 'workspace:auth-service:auth-flow'
 include 'workspace:auth-service:auth-query'
-include 'workspace:shared:shared-database'
-include 'workspace:shared:shared-elasticsearch'
-include 'workspace:shared:shared-eventsourcing'
-findProject(':workspace:shared:shared-eventsourcing')?.name = 'shared-eventsourcing'
+
+
+
 

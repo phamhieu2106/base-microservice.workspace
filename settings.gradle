@@ -9,6 +9,7 @@ include 'workspace:shared:shared-rabbitmq'
 
 //infrastructure
 include 'workspace:infrastructure:auth-server'
+include 'workspace:infrastructure:gateway-server'
 
 //auth service
 include 'workspace:auth-service:auth-command'
@@ -16,7 +17,8 @@ include 'workspace:auth-service:auth-shared'
 include 'workspace:auth-service:auth-domain'
 include 'workspace:auth-service:auth-flow'
 include 'workspace:auth-service:auth-query'
-
-
-
+include 'workspace:shared:shared-redis'
+findProject(':workspace:shared:shared-redis')?.name = 'shared-redis'
+include 'workspace:shared:shared-auth'
+findProject(':workspace:shared:shared-auth')?.name = 'shared-auth'
 

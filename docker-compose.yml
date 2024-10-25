@@ -48,7 +48,7 @@ services:
       - "9993:2181"
 
   henry-debezium:
-    image: debezium/connect:latest
+    image: debezium/connect:2.7.3.Final
     container_name: henry-debezium
     environment:
       BOOTSTRAP_SERVERS: henry-kafka:9992

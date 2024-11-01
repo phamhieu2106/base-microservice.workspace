@@ -21,4 +21,6 @@ include 'workspace:shared:shared-redis'
 findProject(':workspace:shared:shared-redis')?.name = 'shared-redis'
 include 'workspace:shared:shared-auth'
 findProject(':workspace:shared:shared-auth')?.name = 'shared-auth'
+include 'workspace:shared:shared-kafka'
+findProject(':workspace:shared:shared-kafka')?.name = 'shared-kafka'
 

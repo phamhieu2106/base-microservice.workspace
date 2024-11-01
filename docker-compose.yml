@@ -7,8 +7,9 @@ services:
       POSTGRES_USER: henry
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: henry-event
+      POSTGRES_INITDB_ARGS: "-c wal_level=logical -c max_replication_slots=4 -c max_wal_senders=4"
     ports:
-      - "9990:5432"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - .docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -20,21 +21,23 @@ services:
       - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ports:
-      - "9991:9200"
-      - "9981:9300"
+      - "9200:9200"
+      - "9300:9300"
     volumes:
       - es_data:/usr/share/elasticsearch/data
 
   henry-kafka:
-    image: confluentinc/cp-kafka:latest
+    image: wurstmeister/kafka:latest
     container_name: henry-kafka
     environment:
-      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://henry-kafka:9092,OUTSIDE://localhost:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_ZOOKEEPER_CONNECT: henry-zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://henry-kafka:9992
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_REPLICATION_FACTOR: 1
     ports:
-      - "9992:9092"
+      - "9094:9094"
     depends_on:
       - henry-zookeeper
 
@@ -45,24 +48,23 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - "9993:2181"
+      - "2181:2181"
 
   henry-debezium:
     image: debezium/connect:2.7.3.Final
     container_name: henry-debezium
     environment:
-      BOOTSTRAP_SERVERS: henry-kafka:9992
-      GROUP_ID: 1
+      BOOTSTRAP_SERVERS: henry-kafka:9092
+      GROUP_ID: debezium
       CONFIG_STORAGE_TOPIC: debezium_config
       OFFSET_STORAGE_TOPIC: debezium_offsets
       STATUS_STORAGE_TOPIC: debezium_statuses
+      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       KEY_CONVERTER_SCHEMAS_ENABLE: "false"
       VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
-      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_PRODUCER_MAX_BLOCK_MS: "5000"
     ports:
-      - "9994:8083"
+      - "8083:8083"
     depends_on:
       - henry-kafka
       - henry-postgres
@@ -71,14 +73,14 @@ services:
     image: rabbitmq:management
     container_name: henry-rabbitmq
     ports:
-      - "9995:5672"
-      - "9985:15672" # Management UI
+      - "5672:5672"
+      - "15672:15672" # Management UI
 
   henry-redis:
     image: redis:latest
     container_name: henry-redis
     ports:
-      - "9996:6379"
+      - "6379:6379"
     volumes:
       - redis_data:/data
 

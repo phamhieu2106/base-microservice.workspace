@@ -6,8 +6,14 @@ include 'workspace:shared:shared-elasticsearch'
 include 'workspace:shared:shared-eventsourcing'
 include 'workspace:shared:shared-eventsourcingbase'
 include 'workspace:shared:shared-rabbitmq'
+include 'workspace:shared:shared-redis'
+include 'workspace:shared:shared-auth'
+include 'workspace:shared:shared-kafka'
+include 'workspace:shared:shared-websocket'
+include 'workspace:shared:shared-mvc'
 
 //infrastructure
+include 'workspace:infrastructure:notification-server'
 include 'workspace:infrastructure:auth-server'
 include 'workspace:infrastructure:gateway-server'
 
@@ -17,10 +23,5 @@ include 'workspace:auth-service:auth-shared'
 include 'workspace:auth-service:auth-domain'
 include 'workspace:auth-service:auth-flow'
 include 'workspace:auth-service:auth-query'
-include 'workspace:shared:shared-redis'
-findProject(':workspace:shared:shared-redis')?.name = 'shared-redis'
-include 'workspace:shared:shared-auth'
-findProject(':workspace:shared:shared-auth')?.name = 'shared-auth'
-include 'workspace:shared:shared-kafka'
-findProject(':workspace:shared:shared-kafka')?.name = 'shared-kafka'
+
 

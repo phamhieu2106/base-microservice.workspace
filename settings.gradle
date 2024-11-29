@@ -23,5 +23,6 @@ include 'workspace:auth-service:auth-shared'
 include 'workspace:auth-service:auth-domain'
 include 'workspace:auth-service:auth-flow'
 include 'workspace:auth-service:auth-query'
-
+include 'workspace:shared:shared-notification'
+findProject(':workspace:shared:shared-notification')?.name = 'shared-notification'
 

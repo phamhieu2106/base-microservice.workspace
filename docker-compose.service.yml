@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  auth-command:
+    build:
+      context: ./workspace/auth-service/auth-command
+    ports:
+      - "8001:8001"
+    depends_on:
+      - henry-postgres
+  auth-flow:
+    build:
+      context: ./workspace/auth-service/auth-flow
+    ports:
+      - "8002:8002"
+    depends_on:
+      - henry-postgres
+  auth-query:
+    build:
+      context: ./workspace//auth-service/auth-query
+    ports:
+      - "8003:8003"
+    depends_on:
+      - henry-postgres

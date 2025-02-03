@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${springDependency}"
+    id 'application'
 }
 
 group = 'com.henry'
@@ -46,7 +47,6 @@ subprojects {
     repositories {
         mavenCentral()
     }
-
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-security'

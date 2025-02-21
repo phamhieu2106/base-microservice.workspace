@@ -17,6 +17,7 @@ include 'workspace:1-shared:shared-notification'
 include 'workspace:2-infrastructure:notification-server'
 include 'workspace:2-infrastructure:auth-server'
 include 'workspace:2-infrastructure:gateway-server'
+include 'workspace:2-infrastructure:eureka-server'
 
 //auth service
 include 'workspace:auth-service:auth-command'

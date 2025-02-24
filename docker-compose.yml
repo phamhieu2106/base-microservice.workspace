@@ -5,9 +5,9 @@ services:
     image: postgres:latest
     container_name: henry-postgres
     environment:
-      POSTGRES_USER: $dockerPostgresUsername
-      POSTGRES_PASSWORD: $dockerPostgresPassword
-      POSTGRES_DB: $dockerPostgresDatabase
+      POSTGRES_USER: henry
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: henry-event
       POSTGRES_INITDB_ARGS: "-c wal_level=logical -c max_replication_slots=4 -c max_wal_senders=4"
     ports:
       - "5432:5432"

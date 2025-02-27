@@ -69,6 +69,16 @@ subprojects {
         }
     }
 }
+
+tasks.register('runApp', JavaExec) {
+    main = 'org.springframework.boot.loader.JarLauncher'  // If you're using Spring Boot
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['--spring.config.name=application']  // Optional: specify your Spring config file name if needed
+    systemProperties = System.properties + [
+            'SYSTEM_NAME': project.hasProperty('systemName') ? project.systemName : 'vi'
+    ] as Map<String, ?>
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }

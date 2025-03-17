@@ -1,24 +1,42 @@
 version: '3.8'
 
 services:
-  auth-command:
+  movie-service-base:
+    image: service-base
     build:
-      context: ./workspace/auth-service/auth-command
-    ports:
-      - "8001:8001"
-    depends_on:
-      - henry-postgres
-  auth-flow:
+      dockerfile: Dockerfile
+    volumes:
+      - gradle.properties
+  movie-command:
+    image: movie-service
+    container_name: movie-command
     build:
-      context: ./workspace/auth-service/auth-flow
+      context: ./workspace/movie-service/movie-command
+    environment:
+      - SERVICE_NAME=movie-command
     ports:
-      - "8002:8002"
+      - "8101:8101"
     depends_on:
-      - henry-postgres
-  auth-query:
+      - service-base
+  movie-flow:
+    image: movie-service
+    container_name: movie-flow
     build:
-      context: ./workspace//auth-service/auth-query
+      context: ./workspace/movie-service/movie-flow
+    environment:
+      - SERVICE_NAME=movie-flow
     ports:
-      - "8003:8003"
+      - "8102:8102"
     depends_on:
-      - henry-postgres
+      - service-base
+  movie-query:
+    image: movie-service
+    container_name: movie-query
+    build:
+      context: ./workspace/movie-service/movie-query
+    environment:
+      - SERVICE_NAME=movie-query
+    ports:
+      - "8103:8103"
+    depends_on:
+      - service-base

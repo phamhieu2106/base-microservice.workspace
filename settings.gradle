@@ -20,8 +20,8 @@ include 'workspace:2-infrastructure:gateway-server'
 include 'workspace:2-infrastructure:eureka-server'
 
 //auth service
-//include 'workspace:auth-service:auth-command'
-//include 'workspace:auth-service:auth-shared'
-//include 'workspace:auth-service:auth-domain'
-//include 'workspace:auth-service:auth-flow'
-//include 'workspace:auth-service:auth-query'
+include 'workspace:auth-service:auth-command'
+include 'workspace:auth-service:auth-shared'
+include 'workspace:auth-service:auth-domain'
+include 'workspace:auth-service:auth-flow'
+include 'workspace:auth-service:auth-query'

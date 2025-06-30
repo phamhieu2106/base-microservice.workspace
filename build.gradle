@@ -93,9 +93,3 @@ tasks.register('dockerDown', Exec) {
     description = 'Stop and remove Docker containers using docker-compose'
     commandLine 'docker-compose', 'down', '-v'
 }
-
-tasks.register('dockerComposeService', Exec) {
-    group = 'docker'
-    description = 'Compose docker Service Module and Other Service'
-    commandLine 'docker-compose', '-f', 'docker-compose.yml', '-f', 'docker-compose.service.yml', 'up', '-d'
-}

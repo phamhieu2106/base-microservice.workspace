@@ -1,6 +1,6 @@
 
 .gradle
-com.henry.build/
+build
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/com.henry.build/
 !**/src/test/**/com.henry.build/

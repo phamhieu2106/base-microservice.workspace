@@ -1,13 +1,13 @@
 name: base-microservice
 version: '3.8'
 services:
-  henry-postgres:
+  base-postgres:
     image: postgres:latest
-    container_name: henry-postgres
+    container_name: base-postgres
     environment:
-      POSTGRES_USER: henry
+      POSTGRES_USER: base
       POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: henry-event
+      POSTGRES_DB: base-event
       POSTGRES_INITDB_ARGS: "-c wal_level=logical -c max_replication_slots=4 -c max_wal_senders=4"
     ports:
       - "5432:5432"
@@ -15,7 +15,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - .docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  henry-elasticsearch:
+  base-elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
     environment:
       - discovery.type=single-node
@@ -27,35 +27,35 @@ services:
     volumes:
       - es_data:/usr/share/elasticsearch/data
 
-  henry-kafka:
+  base-kafka:
     image: wurstmeister/kafka:latest
-    container_name: henry-kafka
+    container_name: base-kafka
     environment:
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://henry-kafka:9092,OUTSIDE://localhost:9094
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://base-kafka:9092,OUTSIDE://localhost:9094
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_LISTENERS: INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-      KAFKA_ZOOKEEPER_CONNECT: henry-zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: base-zookeeper:2181
       KAFKA_REPLICATION_FACTOR: 1
     ports:
       - "9094:9094"
     depends_on:
-      - henry-zookeeper
+      - base-zookeeper
 
-  henry-zookeeper:
+  base-zookeeper:
     image: confluentinc/cp-zookeeper:latest
-    container_name: henry-zookeeper
+    container_name: base-zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
 
-  henry-debezium:
+  base-debezium:
     image: debezium/connect:2.7.3.Final
-    container_name: henry-debezium
+    container_name: base-debezium
     environment:
-      BOOTSTRAP_SERVERS: henry-kafka:9092
+      BOOTSTRAP_SERVERS: base-kafka:9092
       GROUP_ID: debezium
       CONFIG_STORAGE_TOPIC: debezium_config
       OFFSET_STORAGE_TOPIC: debezium_offsets
@@ -67,19 +67,19 @@ services:
     ports:
       - "8083:8083"
     depends_on:
-      - henry-kafka
-      - henry-postgres
+      - base-kafka
+      - base-postgres
 
-  henry-rabbitmq:
+  base-rabbitmq:
     image: rabbitmq:management
-    container_name: henry-rabbitmq
+    container_name: base-rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672" # Management UI
 
-  henry-redis:
+  base-redis:
     image: redis:latest
-    container_name: henry-redis
+    container_name: base-redis
     ports:
       - "6379:6379"
     volumes:

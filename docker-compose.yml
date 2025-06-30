@@ -1,4 +1,4 @@
-name: henry-cinema-microservice
+name: base-microservice
 version: '3.8'
 services:
   henry-postgres:

@@ -75,7 +75,7 @@ services:
     container_name: base-rabbitmq
     ports:
       - "5672:5672"
-      - "15672:15672" # Management UI
+      - "15672:15672"
 
   base-redis:
     image: redis:latest

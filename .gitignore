@@ -2,8 +2,8 @@
 .gradle
 build
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/com.henry.build/
-!**/src/test/**/com.henry.build/
+!**/src/main/**/com.base.build/
+!**/src/test/**/com.base.build/
 
 ### STS ###
 .apt_generated

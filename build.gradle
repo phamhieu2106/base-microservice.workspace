@@ -1,7 +1,8 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version "${springBootVersion}"
-    id 'io.spring.dependency-management' version "${springDependency}"
+    id 'org.springframework.boot' version "$springBootVersion"
+    id 'io.spring.dependency-management' version "$springDependency"
+    id 'com.google.protobuf' version '0.9.4'
     id 'application'
 }
 
@@ -43,12 +44,14 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'com.google.protobuf'
 
     repositories {
         mavenCentral()
     }
 
     dependencies {
+
         implementation 'io.springfox:springfox-swagger2:3.0.0'
         implementation 'io.springfox:springfox-boot-starter:3.0.0'
         implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -72,8 +75,29 @@ subprojects {
     dependencyManagement {
         imports {
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion"
+            mavenBom "org.springframework.grpc:spring-grpc-dependencies:$springGrpcVersion"
         }
     }
+
+    protobuf {
+        protoc {
+            artifact = 'com.google.protobuf:protoc'
+        }
+        plugins {
+            grpc {
+                artifact = 'io.grpc:protoc-gen-grpc-java'
+            }
+        }
+        generateProtoTasks {
+            all()*.plugins {
+                grpc {
+                    option 'jakarta_omit'
+                    option '@generated=omit'
+                }
+            }
+        }
+    }
+
 
 }
 
